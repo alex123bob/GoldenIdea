@@ -1,5 +1,5 @@
 const initialState = {
-    name: '空白',
+    name: '',
 };
 
 export default (state = initialState, action) => {

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectMenuItem } from './actionCreators';
-
+import { Menu, Icon } from 'antd';
 import './styles.scss';
 
 const menuItems = [
@@ -45,33 +45,40 @@ const menuItems = [
     },
 ];
 
-export class Menu extends Component {
+export class Sidebar extends Component {
     static propTypes = {
         className: PropTypes.string,
         selMenuItem: PropTypes.func.isRequired,
     };
 
-    onSelectHandler = (item) => {
+    onSelectHandler = (e) => {
+        const id = e.key;
         if (this.props.selMenuItem) {
-            this.props.selMenuItem(item.id);
+            this.props.selMenuItem(id);
         }
     };
 
     createMenuItem() {
+        const len = menuItems.length;
+        const unit = Math.floor(100 / len);
         return menuItems.map((item, e) => (
-            <div key={item.id}>
-                <Link to={'/' + item.id + ''} onClick={this.onSelectHandler.bind(this, item)}>
-                    {item.defaultMessage}
+            <Menu.Item key={item.id} style={{ height: `${unit}%` }}>
+                <Link to={`/${item.id}`}>
+                    <Icon type='menu-unfold' /> {item.defaultMessage}
                 </Link>
-            </div>
+            </Menu.Item>
         ));
     }
 
     render() {
         return (
-            <div className='main-menu'>
+            <Menu
+                className='main-menu'
+                mode='inline'
+                onClick={this.onSelectHandler}
+            >
                 {this.createMenuItem()}
-            </div>
+            </Menu>
         );
     }
 }
@@ -82,4 +89,4 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch);
 };
 
-export default connect(null, mapDispatchToProps)(Menu);
+export default connect(null, mapDispatchToProps)(Sidebar);

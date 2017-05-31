@@ -92,6 +92,8 @@ module.exports = function webpackConfig(locale) {
       extensions: ['', '.js', '.jsx', '.css', '.scss'],
       alias: {
         components: path.join(__dirname, 'src/components'),
+        containers: path.join(__dirname, 'src/containers'),
+        reducers: path.join(__dirname, 'src/reducers'),
         'locale-data': 'react-intl/locale-data/' + locale,
       },
     },

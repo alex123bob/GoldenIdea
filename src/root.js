@@ -14,7 +14,7 @@ let store = createStore(allReducers);
 const Root = () => (
     <Provider store={store}>
         <Router>
-            <Route path="/" component={App} />
+            <Route path='/' component={App} />
         </Router>
     </Provider>
 );

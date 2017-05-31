@@ -7,6 +7,12 @@
       "enforceDescriptions": true,
       "fileName": "en-US",
       "messagesDir": "./i18n/"
-    }]
+    }],
+    [
+      "import", {
+        "libraryName": "antd",
+        "style": "css"
+      }
+    ]
   ]
 }

@@ -1,6 +1,6 @@
 import React from 'react';
-import Menu from './containers/sidebar/menu';
-import ContentCt from './containers/contentct/index';
+import Sidebar from 'containers/sidebar/sidebar';
+import ContentCt from 'containers/contentct/index';
 
 // Locale related
 import { addLocaleData, IntlProvider } from 'react-intl';
@@ -21,8 +21,8 @@ const App = ({ match }) => (
         messages={ messages }
     >
         <div className='main-app'>
-            <Menu />
-            <Route path="/:module" component={ContentCt} />
+            <Sidebar />
+            <Route path='/:module' component={ContentCt} />
         </div>
     </IntlProvider>
 );

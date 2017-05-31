@@ -17,7 +17,9 @@ class ContentCt extends Component {
                 <div className='content-title'>
                     {this.props.contentTitle.name}
                 </div>
-                {this.props.match.params.module}
+                <div>
+                    {this.props.match.params.module}
+                </div>
             </div>
         );
     }

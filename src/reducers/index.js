@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import sidebarReducer from './sidebar-reducer';
+import contentTitleReducer from '../containers/contentct/contenttitle-reducer';
 
 const allReducers = combineReducers({
-    sidebar: sidebarReducer,
+    contentTitle: contentTitleReducer,
 });
 
 export default allReducers;

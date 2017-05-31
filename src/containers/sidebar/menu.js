@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { selectMenuItem } from './actionCreators';
 
 import './styles.scss';
 
@@ -45,21 +48,19 @@ const menuItems = [
 export class Menu extends Component {
     static propTypes = {
         className: PropTypes.string,
-        onSelect: PropTypes.func
+        selMenuItem: PropTypes.func.isRequired,
     };
 
-    onSelectHandler = e => {
-        const { onSelect } = this.props;
-
-        if (onSelect) {
-            onSelect(e);
+    onSelectHandler = (item) => {
+        if (this.props.selMenuItem) {
+            this.props.selMenuItem(item.id);
         }
     };
 
     createMenuItem() {
-        return menuItems.map((item) => (
+        return menuItems.map((item, e) => (
             <div key={item.id}>
-                <Link to={'/' + item.id + ''} onClick={this.onSelectHandler}>
+                <Link to={'/' + item.id + ''} onClick={this.onSelectHandler.bind(this, item)}>
                     {item.defaultMessage}
                 </Link>
             </div>
@@ -75,4 +76,10 @@ export class Menu extends Component {
     }
 }
 
-export default Menu;
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        selMenuItem: selectMenuItem,
+    }, dispatch);
+};
+
+export default connect(null, mapDispatchToProps)(Menu);

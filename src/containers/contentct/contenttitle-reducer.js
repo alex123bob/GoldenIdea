@@ -41,6 +41,11 @@ export default (state = initialState, action) => {
                 name: '网站建设',
             };
             break;
+        case `${SELECT}ihaveideas`:
+            newState = {
+                name: '我有金点子',
+            };
+            break;
         default:
             break;
     }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
+import NewIdea from 'containers/newidea';
 
 require('./styles.scss');
 
@@ -11,6 +13,18 @@ class ContentCt extends Component {
         contentTitle: PropTypes.object.isRequired,
     }
 
+    getComponent(module) {
+        let cmp;
+        switch (module) {
+            case 'ihaveideas':
+                cmp = NewIdea;
+                break;
+            default:
+                break;
+        }
+        return cmp;
+    }
+
     render() {
         return (
             <div className='content-ct'>
@@ -18,7 +32,7 @@ class ContentCt extends Component {
                     {this.props.contentTitle.name}
                 </div>
                 <div>
-                    {this.props.match.params.module}
+                    <Route exact path='/:module' component={this.getComponent(this.props.match.params.module)} />
                 </div>
             </div>
         );

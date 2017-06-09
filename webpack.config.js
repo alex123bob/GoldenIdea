@@ -46,6 +46,13 @@ module.exports = {
         modules: true,
         localIdentName: '[local]'
       }
+    }, {
+      test: /\.(png|jpg|gif)$/,
+      loader: 'file-loader',
+      query: {
+        limit: 8192,
+        name: '[path][name].[ext]'
+      }
     }]
   }
 };

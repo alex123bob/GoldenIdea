@@ -1,0 +1,33 @@
+.app .trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 16px;
+  cursor: pointer;
+  transition: color .3s;
+}
+
+.app .trigger:hover {
+  color: #108ee9;
+}
+
+.app .logo {
+  height: 32px;
+  background: rgba(16, 142, 233, 0.7);
+  background-image: url('/img/light-bulb.png');
+  background-repeat: no-repeat;
+  background-position: left center;
+  border-radius: 6px;
+  margin: 16px;
+  line-height: 32px;
+  font-size: 20px;
+  text-align: center;
+  color: white;
+}
+
+.app .ant-layout-sider-collapsed .anticon {
+  font-size: 16px;
+}
+
+.app .ant-layout-sider-collapsed .nav-text {
+  display: none;
+}

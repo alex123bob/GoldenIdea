@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Layout, Icon } from 'antd';
+import styles from './sider.css';
 const { Sider } = Layout;
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -44,7 +45,7 @@ class SiderMenu extends Component {
         collapsible
         collapsed={this.props.collapsed}
       >
-        <div className="logo">金点子</div>
+        <div className="logo">{this.props.collapsed ? '' : '金点子'}</div>
         <Menu theme="dark" mode="inline" onSelect={this.selectItemHandler.bind(this)}>
           {this.createMenuItems()}
         </Menu>

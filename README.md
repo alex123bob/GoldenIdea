@@ -1,4 +1,4 @@
-# webpack-express-boilerplate
+# GoldenIdea configuration tutorial
 A boilerplate for running a Webpack workflow in Node express
 
 Please read the following article: [The ultimate Webpack setup](http://www.christianalfoni.com/articles/2015_04_19_The-ultimate-webpack-setup) to know more about this boilerplate.
@@ -9,13 +9,13 @@ Inspired by [this project](https://github.com/vesparny/react-kickstart) and the 
 **NOTE!** Use the latest version of Node, 4.x.x.
 
 ## Install and Running
-`git clone https://github.com/christianalfoni/webpack-express-boilerplate.git`
+`git clone https://github.com/alex123bob/GoldenIdea.git`
 
 or just export the files:
 
-`svn export https://github.com/christianalfoni/webpack-express-boilerplate/trunk ./dir`
+`svn export https://github.com/alex123bob/GoldenIdea/trunk ./dir`
 
-1. cd webpack-express-boilerplate
+1. cd GoldenIdea
 2. npm install
 3. npm start
 4. navigate to http://localhost:3000 in your browser of choice.

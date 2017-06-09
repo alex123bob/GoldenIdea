@@ -1,6 +1,5 @@
-dist/*
-node_modules/*
-**/node_modules/*
-tests/*
-*.config.js
-*.config.production.js
+dist
+node_modules
+coverage
+webpack.*.js
+*Server.js

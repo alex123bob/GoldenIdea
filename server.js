@@ -1,38 +1,51 @@
-/* eslint-disable no-var, strict */
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var webpackConfig = require('./webpack.config.base');
-var locale = process.env.LOCALE || 'en-US';
-var config = webpackConfig(locale);
-var port = 5000;
+/* eslint no-console: 0 */
 
-// Settings for dev server
-var babelLoader = {
-    test: /\.jsx?$/,
-    loaders: ['react-hot', 'babel'],
-    exclude: /node_modules/,
-};
+const path = require('path');
+const express = require('express');
+const webpack = require('webpack');
+const webpackMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const config = require('./webpack.config.js');
 
-// http://www.cnblogs.com/Answer1215/p/4312265.html
-// The source map file will only be downloaded if you have source maps enabled and your dev tools open.
-config.devtool = 'eval-source-map';
-config.entry = config.entry.concat([
-    `webpack-dev-server/client?http://localhost:${port}`,
-    'webpack/hot/dev-server'
-]);
-config.module.loaders.push(babelLoader);
-config.output.path = __dirname;
-config.plugins = config.plugins.concat([
-    new webpack.HotModuleReplacementPlugin()
-]);
+const isDeveloping = process.env.NODE_ENV !== 'production';
+const port = isDeveloping ? 3000 : process.env.PORT;
+const app = express();
 
-new WebpackDevServer(webpack(config), {
-    publicPath: '/static/',
-    hot: true,
-    historyApiFallback: true
-}).listen(port, 'localhost', function (err) {
-    if (err) {
-        console.log(err);
+if (isDeveloping) {
+  const compiler = webpack(config);
+  const middleware = webpackMiddleware(compiler, {
+    publicPath: config.output.publicPath,
+    contentBase: 'src',
+    stats: {
+      colors: true,
+      hash: false,
+      timings: true,
+      chunks: false,
+      chunkModules: false,
+      modules: false
     }
-    console.log('Listening at localhost:5000');
+  });
+
+  app.use(middleware);
+  app.use(webpackHotMiddleware(compiler));
+  app.get('/', function response(req, res) {
+    res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
+    res.end();
+  });
+  // app.get('/api', (req, res) => {
+  //   res.json({test: 'test'});
+  //   res.end();
+  // });
+} else {
+  app.use(express.static(__dirname + '/dist'));
+  app.get('/', function response(req, res) {
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
+  });
+}
+
+app.listen(port, '0.0.0.0', function onStart(err) {
+  if (err) {
+    console.log(err);
+  }
+  console.info('==> 🌎 Listening on port %s. Open up http://0.0.0.0:%s/ in your browser.', port, port);
 });

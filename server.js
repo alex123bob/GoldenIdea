@@ -3,13 +3,20 @@
 const path = require('path');
 const express = require('express');
 const webpack = require('webpack');
+const bodyParser = require('body-parser');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack.config.js');
+const ideaRouter = require('./server/router/idea');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
+app.use('/idea', ideaRouter);
 
 if (isDeveloping) {
   const compiler = webpack(config);
@@ -33,10 +40,6 @@ if (isDeveloping) {
     res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
     res.end();
   });
-  // app.get('/api', (req, res) => {
-  //   res.json({test: 'test'});
-  //   res.end();
-  // });
 } else {
   app.use(express.static(__dirname + '/dist'));
   app.get('/', function response(req, res) {

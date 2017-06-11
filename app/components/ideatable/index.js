@@ -1,10 +1,27 @@
-import { Table } from 'antd';
+import { Modal, Table } from 'antd';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 const columns = [{
   title: '标题',
   dataIndex: 'title',
+  onCellClick: (rec, e) => {
+    let content = rec.content;
+    content = content.split('\n').map((item) => {
+      return (
+        <div key={item.id}>{item}</div>
+      );
+    });
+    Modal.info({
+      title: rec.title,
+      content: (
+        <div>
+          {content}
+        </div>
+      ),
+      onOk() { },
+    });
+  }
 }, {
   title: '作者',
   dataIndex: 'author',
@@ -27,21 +44,21 @@ class IdeaTable extends Component {
     fetch('/idea/get/' + cmp.props.type, {
       method: 'GET'
     })
-    .then(res => res.json())
-    .then(resJson => {
-      if (resJson.status === 'successful') {
-        let arr = resJson.content;
-        arr = arr.map((item) => {
-          return {
-            ...item,
-            key: item.id
-          };
-        });
-        cmp.setState({
-          ideas: arr
-        });
-      }
-    });
+      .then(res => res.json())
+      .then(resJson => {
+        if (resJson.status === 'successful') {
+          let arr = resJson.content;
+          arr = arr.map((item) => {
+            return {
+              ...item,
+              key: item.id
+            };
+          });
+          cmp.setState({
+            ideas: arr
+          });
+        }
+      });
   }
   onSelectChange = (selectedRowKeys) => {
     console.log('selectedRowKeys changed: ', selectedRowKeys);

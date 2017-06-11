@@ -7,6 +7,14 @@ import SiderMenu from './containers/sider';
 import HeaderCt from './containers/header';
 import styles from './app.css';
 import NewIdea from './containers/newidea';
+import ProfessionIdea from './containers/profession';
+import TeambuildingIdea from './containers/teambuilding';
+import PoliceassuranceIdea from './containers/policeassurance';
+import LawandruleIdea from './containers/lawandrule';
+import ScientificenhancementIdea from './containers/scientificenhancement';
+import WebsiteconstructionIdea from './containers/websiteconstruction';
+import LatestIdea from './containers/latest';
+import IdeaTable from './components/ideatable';
 
 class App extends Component {
   static propTypes = {
@@ -28,9 +36,29 @@ class App extends Component {
       case 'ihaveideas':
         ct = <NewIdea />;
         break;
-
+      case 'profession':
+        ct = <ProfessionIdea type={activeMenuItem.id} updateTime={Date.now()} />
+        break;
+      case 'teambuilding':
+        ct = <TeambuildingIdea type={activeMenuItem.id} updateTime={Date.now()} />
+        break;
+      case 'policeassurance':
+        ct = <PoliceassuranceIdea type={activeMenuItem.id} updateTime={Date.now()} />;
+        break;
+      case 'lawandrule':
+        ct = <LawandruleIdea type={activeMenuItem.id} updateTime={Date.now()} />;
+        break;
+      case 'scientificenhancement':
+        ct = <ScientificenhancementIdea type={activeMenuItem.id} updateTime={Date.now()} />;
+        break;
+      case 'websiteconstruction':
+        ct = <WebsiteconstructionIdea type={activeMenuItem.id} updateTime={Date.now()} />;
+        break;
+      case 'latest':
+        ct = <LatestIdea type={activeMenuItem.id} updateTime={Date.now()} />
+        break;
       default:
-        ct = <div>Empty</div>;
+        ct = <IdeaTable />;
         break;
       }
     }

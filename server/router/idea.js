@@ -7,22 +7,40 @@ router.use((req, res, next) => {
   next();
 });
 
-router.put('/add', (req, res) => {
-  const promise = ideaDb({
-    type: 'add',
-    params: req.body
-  });
-  promise.then((rows) => {
-    res.json({
-      status: 'successful',
-      content: rows
+router
+  .put('/add', (req, res) => {
+    const promise = ideaDb({
+      type: 'add',
+      params: req.body
     });
-  }, (err) => {
-    res.json({
-      status: 'failing',
-      content: err
+    promise.then((rows) => {
+      res.json({
+        status: 'successful',
+        content: rows
+      });
+    }, (err) => {
+      res.json({
+        status: 'failing',
+        content: err
+      });
+    });
+  })
+  .get('/get/:type', (req, res) => {
+    const promise = ideaDb({
+      type: 'get',
+      params: req.params
+    });
+    promise.then((rows) => {
+      res.json({
+        status: 'successful',
+        content: rows
+      });
+    }, (err) => {
+      res.json({
+        status: 'failing',
+        content: err
+      });
     });
   });
-});
 
 module.exports = router;

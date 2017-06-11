@@ -3,9 +3,9 @@ const Q = require('Q');
 
 module.exports = (action) => {
   const deferred = Q.defer();
+  const params = action.params;
   switch (action.type) {
   case 'add':
-    const params = action.params;
     let fields = [];
     let values = [];
     for (const key in params) {
@@ -28,6 +28,21 @@ module.exports = (action) => {
         }
       }
     );
+    break;
+  case 'get':
+    let sql;
+    if (params.type === 'latest') {
+      sql = 'select * from `ideas` where `isDeleted` = \'false\' limit 0, 10 ';
+    } else {
+      sql = 'select * from `ideas` where `isDeleted` = \'false\' and `type` = \'' + params.type + '\' ';
+    }
+    conn.query(sql, (err, rows, fields) => {
+      if (err) {
+        deferred.reject(err);
+      } else {
+        deferred.resolve(rows);
+      }
+    });
     break;
   default:
     break;

@@ -7,9 +7,9 @@ const columns = [{
   dataIndex: 'title',
   onCellClick: (rec, e) => {
     let content = rec.content;
-    content = content.split('\n').map((item) => {
+    content = content.split('\n').map((item, index) => {
       return (
-        <div key={item.id}>{item}</div>
+        <div key={item.id + '-' + index}>{item}</div>
       );
     });
     Modal.info({

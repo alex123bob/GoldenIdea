@@ -7,10 +7,6 @@ class IdeaDetail extends Component {
   static propTypes = {
     activeIdea: PropTypes.object.isRequired
   }
-  createIdeaTitle(activeIdea) {
-    const rec = activeIdea;
-    return '标题: ' + rec.title + '; 作者: ' + rec.author + '; ' + rec.createTime;
-  }
   createIdeaContent(activeIdea) {
     return activeIdea.content.split(/\n/g).map((item, index) => {
       return (
@@ -18,10 +14,23 @@ class IdeaDetail extends Component {
       );
     });
   }
+  createIdeaFootnote(activeIdea) {
+    return (
+      <span>
+        {activeIdea.author}
+        &nbsp;&nbsp;
+        <a href="javascript:void(0)">{activeIdea.createTime}</a>
+      </span>
+    );
+  }
   render() {
     return (
       <div>
-        <Card title={this.createIdeaTitle(this.props.activeIdea.activeIdea)} extra={<a href="javascript:void(0)">More</a>} style={{ width: '100%' }}>
+        <Card
+          title={this.props.activeIdea.activeIdea.title}
+          extra={this.createIdeaFootnote(this.props.activeIdea.activeIdea)}
+          style={{ width: '100%' }}
+        >
           {this.createIdeaContent(this.props.activeIdea.activeIdea)}
         </Card>
       </div>

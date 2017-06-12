@@ -1,5 +1,6 @@
 const conn = require('./conn');
 const Q = require('Q');
+const dateFormat = require('dateformat');
 
 module.exports = (action) => {
   const deferred = Q.defer();
@@ -37,10 +38,14 @@ module.exports = (action) => {
       sql = 'select * from `ideas` where `isDeleted` = \'false\' and `type` = \'' + params.type + '\' ';
     }
     conn.query(sql, (err, rows, fields) => {
+      const recs = rows.map((rec) => {
+        rec.createTime = dateFormat(rec.createTime, 'yyyy-mm-dd HH:MM:ss');
+        return rec;
+      });
       if (err) {
         deferred.reject(err);
       } else {
-        deferred.resolve(rows);
+        deferred.resolve(recs);
       }
     });
     break;

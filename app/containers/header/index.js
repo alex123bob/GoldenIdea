@@ -19,7 +19,7 @@ class HeaderCt extends Component {
           type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'}
           onClick={this.props.toggle}
         />
-        {activeMenuItem ? activeMenuItem.name : '请选择模块'}
+        {activeMenuItem ? activeMenuItem.name : '最新金点子'}
       </Header>
     );
   }

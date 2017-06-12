@@ -1,8 +1,8 @@
 export default (initState = {}, action) => {
   let state;
   switch (action.type) {
-  case 'selectMenuItem':
-    state = {...initState, activeMenuItem: action.activeMenuItem};
+  case 'selectIdea':
+    state = {...initState, activeIdea: action.activeIdea};
     break;
   default:
     state = {};

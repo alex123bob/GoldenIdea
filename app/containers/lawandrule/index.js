@@ -1,5 +1,5 @@
 // import React, { Component } from 'react';
-import IdeaTable from '../../components/ideatable';
+import IdeaTable from '../../containers/ideatable';
 
 class LawandruleIdea extends IdeaTable {
 }

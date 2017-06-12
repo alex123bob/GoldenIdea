@@ -13,12 +13,14 @@ import PoliceassuranceIdea from './containers/policeassurance';
 import LawandruleIdea from './containers/lawandrule';
 import ScientificenhancementIdea from './containers/scientificenhancement';
 import WebsiteconstructionIdea from './containers/websiteconstruction';
+import IdeaDetail from './containers/ideadetail';
 import LatestIdea from './containers/latest';
-import IdeaTable from './components/ideatable';
+import IdeaTable from './containers/ideatable';
 
 class App extends Component {
   static propTypes = {
-    activeMenuItem: PropTypes.object.isRequired
+    activeMenuItem: PropTypes.object.isRequired,
+    activeIdea: PropTypes.object.isRequired
   }
   state = {
     collapsed: false,
@@ -30,17 +32,18 @@ class App extends Component {
   }
   createCmp() {
     const activeMenuItem = this.props.activeMenuItem.activeMenuItem;
-    let ct = <div>Content</div>;
+    const activeIdea = this.props.activeIdea.activeIdea;
+    let ct;
     if (activeMenuItem) {
       switch (activeMenuItem.id) {
       case 'ihaveideas':
         ct = <NewIdea />;
         break;
       case 'profession':
-        ct = <ProfessionIdea type={activeMenuItem.id} updateTime={Date.now()} />
+        ct = <ProfessionIdea type={activeMenuItem.id} updateTime={Date.now()} />;
         break;
       case 'teambuilding':
-        ct = <TeambuildingIdea type={activeMenuItem.id} updateTime={Date.now()} />
+        ct = <TeambuildingIdea type={activeMenuItem.id} updateTime={Date.now()} />;
         break;
       case 'policeassurance':
         ct = <PoliceassuranceIdea type={activeMenuItem.id} updateTime={Date.now()} />;
@@ -55,12 +58,17 @@ class App extends Component {
         ct = <WebsiteconstructionIdea type={activeMenuItem.id} updateTime={Date.now()} />;
         break;
       case 'latest':
-        ct = <LatestIdea type={activeMenuItem.id} updateTime={Date.now()} />
+        ct = <LatestIdea type={activeMenuItem.id} updateTime={Date.now()} />;
         break;
       default:
         ct = <IdeaTable />;
         break;
       }
+    } else if (activeIdea) {
+      ct = <IdeaDetail />;
+    } else {
+      // show latest panel by default.
+      ct = <LatestIdea type="latest" updateTime={Date.now()} />;
     }
     return ct;
   }
@@ -82,7 +90,8 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  activeMenuItem: state.activeMenuItemReducer
+  activeMenuItem: state.activeMenuItemReducer,
+  activeIdea: state.activeIdeaReducer
 });
 
 export default connect(mapStateToProps)(App);

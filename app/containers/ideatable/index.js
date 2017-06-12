@@ -1,34 +1,41 @@
 import { Modal, Table } from 'antd';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import selectIdea from './action';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-const columns = [{
-  title: '标题',
-  dataIndex: 'title',
-  onCellClick: (rec, e) => {
-    let content = rec.content;
-    content = content.split('\n').map((item, index) => {
-      return (
-        <div key={item.id + '-' + index}>{item}</div>
-      );
-    });
-    Modal.info({
-      title: rec.title,
-      content: (
-        <div>
-          {content}
-        </div>
-      ),
-      onOk() { },
-    });
-  }
-}, {
-  title: '作者',
-  dataIndex: 'author',
-}, {
-  title: '时间',
-  dataIndex: 'createTime',
-}];
+const createColumns = (cmp) => {
+  const columns = [{
+    title: '标题',
+    dataIndex: 'title',
+    onCellClick: (rec, e) => {
+      cmp.props.selectIdea(rec);
+      // let content = rec.content;
+      // content = content.split('\n').map((item, index) => {
+      //   return (
+      //     <div key={item.id + '-' + index}>{item}</div>
+      //   );
+      // });
+      // Modal.info({
+      //   title: rec.title,
+      //   content: (
+      //     <div>
+      //       {content}
+      //     </div>
+      //   ),
+      //   onOk() { },
+      // });
+    }
+  }, {
+    title: '作者',
+    dataIndex: 'author',
+  }, {
+    title: '时间',
+    dataIndex: 'createTime',
+  }];
+  return columns;
+}
 
 class IdeaTable extends Component {
   state = {
@@ -107,9 +114,15 @@ class IdeaTable extends Component {
       onSelection: this.onSelection,
     };
     return (
-      <Table rowSelection={rowSelection} columns={columns} dataSource={this.state.ideas} />
+      <Table rowSelection={rowSelection} columns={createColumns(this)} dataSource={this.state.ideas} />
     );
   }
 }
 
-export default IdeaTable;
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    selectIdea: selectIdea
+  }, dispatch);
+};
+
+export default connect(null, mapDispatchToProps)(IdeaTable);

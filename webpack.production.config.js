@@ -1,10 +1,11 @@
 'use strict';
 
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var StatsPlugin = require('stats-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const StatsPlugin = require('stats-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -35,7 +36,13 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    })
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: 'app/assets/',
+        to: './'
+      }
+    ])
   ],
   module: {
     loaders: [{
@@ -50,7 +57,14 @@ module.exports = {
       loader: 'json'
     }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss')
+      loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[local]!postcss')
+    }, {
+      test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
+      loader: 'file-loader',
+      query: {
+        limit: 8192,
+        name: '[path][name].[ext]'
+      }
     }]
   },
   postcss: [

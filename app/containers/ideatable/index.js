@@ -1,4 +1,4 @@
-import { Modal, Table } from 'antd';
+import { Table } from 'antd';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import selectIdea from './action';
@@ -11,21 +11,6 @@ const createColumns = (cmp) => {
     dataIndex: 'title',
     onCellClick: (rec, e) => {
       cmp.props.selectIdea(rec);
-      // let content = rec.content;
-      // content = content.split('\n').map((item, index) => {
-      //   return (
-      //     <div key={item.id + '-' + index}>{item}</div>
-      //   );
-      // });
-      // Modal.info({
-      //   title: rec.title,
-      //   content: (
-      //     <div>
-      //       {content}
-      //     </div>
-      //   ),
-      //   onOk() { },
-      // });
     }
   }, {
     title: '作者',
@@ -35,7 +20,7 @@ const createColumns = (cmp) => {
     dataIndex: 'createTime',
   }];
   return columns;
-}
+};
 
 class IdeaTable extends Component {
   state = {

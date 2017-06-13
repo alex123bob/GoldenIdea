@@ -8,10 +8,34 @@ class HeaderCt extends Component {
   static propTypes = {
     collapsed: PropTypes.bool.isRequired,
     toggle: PropTypes.func.isRequired,
-    activeMenuItem: PropTypes.object.isRequired
+    activeMenuItem: PropTypes.object.isRequired,
+    activeIdea: PropTypes.object,
+    menuItems: PropTypes.array.isRequired
+  }
+  renderIdeaCategory(activeIdea) {
+    let category;
+    this.props.menuItems.forEach((item) => {
+      if (item.id === activeIdea.type) {
+        category = item.name;
+        return false;
+      }
+    });
+    return category;
+  }
+  renderHeader() {
+    const activeMenuItem = this.props.activeMenuItem.activeMenuItem;
+    const activeIdea = this.props.activeIdea.activeIdea;
+    let category;
+    if (activeMenuItem) {
+      category = activeMenuItem.name;
+    } else if (activeIdea) {
+      category = this.renderIdeaCategory(activeIdea);
+    } else {
+      category = '最新金点子';
+    }
+    return category;
   }
   render() {
-    const activeMenuItem = this.props.activeMenuItem.activeMenuItem;
     return (
       <Header style={{ background: '#fff', padding: 0 }}>
         <Icon
@@ -19,14 +43,16 @@ class HeaderCt extends Component {
           type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'}
           onClick={this.props.toggle}
         />
-        {activeMenuItem ? activeMenuItem.name : '最新金点子'}
+        {this.renderHeader()}
       </Header>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  activeMenuItem: state.activeMenuItemReducer
+  activeMenuItem: state.activeMenuItemReducer,
+  activeIdea: state.activeIdeaReducer,
+  menuItems: state.siderReducer
 });
 
 export default connect(mapStateToProps)(HeaderCt);

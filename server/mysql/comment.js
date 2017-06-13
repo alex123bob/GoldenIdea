@@ -34,7 +34,7 @@ module.exports = (action) => {
     break;
   case 'get':
     const ideaId = params.ideaId;
-    const sql = "select * from `comments` where `isDeleted` = 'false' and `ideaId` = '" + ideaId + "' ";
+    const sql = "select * from `comments` where `isDeleted` = 'false' and `ideaId` = '" + ideaId + "' ORDER by `createTime` DESC";
     conn.query(sql, (err, rows, fields) => {
       const recs = rows.map((rec) => {
         rec.createTime = dateFormat(rec.createTime, 'yyyy-mm-dd HH:MM:ss');

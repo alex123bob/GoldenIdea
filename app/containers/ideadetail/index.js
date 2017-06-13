@@ -56,7 +56,7 @@ class IdeaDetail extends Component {
             });
             item.content.push(
               <p key={item.id + '-' + index + '-author'} style={{ textAlign: 'right' }}>{item.author}</p>,
-              <p key={item.id + '-' + index + '-ip'} style={{ textAlign: 'right' }}>{item.ip}</p>
+              <p key={item.id + '-' + index + '-ip'} style={{ textAlign: 'right' }}><a href="javascript:void(0);">{item.ip}</a></p>
             );
           }
           return (

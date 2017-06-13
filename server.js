@@ -8,6 +8,7 @@ const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack.config.js');
 const ideaRouter = require('./server/router/idea');
+const commentRouter = require('./server/router/comment');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 app.use('/idea', ideaRouter);
+app.use('/comment', commentRouter);
 
 if (isDeveloping) {
   const compiler = webpack(config);

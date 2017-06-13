@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import selectIdea from './action';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import styles from './ideatable.css';
 
 const createColumns = (cmp) => {
   const columns = [{
     title: '标题',
+    className: 'title',
     dataIndex: 'title',
     onCellClick: (rec, e) => {
       cmp.props.selectIdea(rec);
@@ -99,7 +101,7 @@ class IdeaTable extends Component {
       onSelection: this.onSelection,
     };
     return (
-      <Table rowSelection={rowSelection} columns={createColumns(this)} dataSource={this.state.ideas} />
+      <Table className="idealist" rowSelection={rowSelection} columns={createColumns(this)} dataSource={this.state.ideas} />
     );
   }
 }
